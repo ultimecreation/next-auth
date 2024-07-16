@@ -3,6 +3,7 @@ import authConfig from "./auth.config"
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { db } from "./lib/db"
 import { getUserById, } from "./data/user"
+import { getTwoFactorConfirmationById } from "./data/twoFactorConfirmation"
 
 declare module "next-auth" {
     interface Session {
@@ -30,6 +31,14 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
             const existingUser = await getUserById(user.id || '')
             if (!existingUser?.emailVerified) return false
+            if (existingUser.isTwoFactorEnabled) {
+                const twoFactorConfirmation = getTwoFactorConfirmationById(existingUser.id)
+                console.log({ twoFactorConfirmation })
+                if (!twoFactorConfirmation) return false
+                await db.twoFactorConfirmation.delete({
+                    where: { userId: existingUser.id }
+                })
+            }
             return true
         },
         async session({ session, token }) {

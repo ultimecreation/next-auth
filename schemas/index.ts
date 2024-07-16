@@ -12,7 +12,8 @@ export const ResetSchema = z.object({
 })
 export const LoginSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(3)
+    password: z.string().min(3),
+    code: z.optional(z.string())
 })
 export const RegisterSchema = z.object({
     email: z.string().email({
