@@ -11,6 +11,7 @@ import { FormError } from '../ui/formError'
 import { FormSuccess } from '../ui/FormSuccess'
 import { login } from '@/actions/login'
 import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 
 
 const LoginForm = () => {
@@ -56,7 +57,7 @@ const LoginForm = () => {
                                 <FormLabel>Email </FormLabel>
                                 <FormControl>
                                     <Input
-                                        {...field} type='email' disabled={isPending} />
+                                        {...field} type='email' disabled={isPending} autoComplete="email" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -69,8 +70,16 @@ const LoginForm = () => {
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
                                     <Input
-                                        {...field} type='password' disabled={isPending} />
+                                        {...field} type='password' disabled={isPending} autoComplete="current-password" />
                                 </FormControl>
+                                <Button
+                                    size="sm"
+                                    variant="link"
+                                    asChild
+                                    className='px-0 font-normal'
+                                >
+                                    <Link href="/auth/reset">Forgot password</Link>
+                                </Button>
                                 <FormMessage />
                             </FormItem>
                         )} />

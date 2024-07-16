@@ -63,7 +63,7 @@ const RegisterForm = () => {
                                 <FormLabel>Email </FormLabel>
                                 <FormControl>
                                     <Input
-                                        {...field} type='email' disabled={isPending} />
+                                        {...field} type='email' disabled={isPending} autoComplete="email" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -76,7 +76,8 @@ const RegisterForm = () => {
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
                                     <Input
-                                        {...field} type='password' disabled={isPending} />
+                                        {...field} type='password' disabled={isPending}
+                                        autoComplete="current-password" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
