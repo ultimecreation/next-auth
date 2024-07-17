@@ -28,7 +28,8 @@ const LoginForm = () => {
         resolver: zodResolver(LoginSchema),
         defaultValues: {
             email: "",
-            password: ""
+            password: "",
+            code: ""
         }
     })
 
@@ -36,21 +37,22 @@ const LoginForm = () => {
         setError('')
         setSuccess('')
         startTransition(() => {
-            login(values)
-                .then((data) => {
-                    if (data?.error) {
-                        form.reset()
-                        setError(data?.error)
-                    }
-                    if (data?.success) {
-                        form.reset()
-                        setSuccess(data?.success)
-                    }
-                    if (data?.twoFactor) {
-                        setShowTwoFactor(true)
-                    }
-                })
-                .catch(() => setError('Something went wrong'))
+
+            login(values).then((data) => {
+
+                if (data?.error) {
+                    form.reset()
+                    setError(data?.error)
+                }
+                if (data?.success) {
+                    form.reset()
+                    setSuccess(data?.success)
+                }
+                if (data?.twoFactor) {
+                    setShowTwoFactor(true)
+                }
+
+            }).catch(() => setError('Something went wrong'))
         })
     }
 
@@ -69,7 +71,10 @@ const LoginForm = () => {
                                     <FormLabel>Two Factor Code </FormLabel>
                                     <FormControl>
                                         <Input
-                                            {...field} disabled={isPending} autoComplete="code" placeholder='123456' />
+                                            {...field} disabled={isPending} autoComplete="code" placeholder='123456'
+                                            onChange={(event) => {
+                                                field.onChange(event.target.value)
+                                            }} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

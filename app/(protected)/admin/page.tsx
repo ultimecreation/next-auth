@@ -21,7 +21,6 @@ const AdminPage = () => {
         const response = await fetch('/api/admin')
         if (response.ok) return toast.success("good job")
         else return toast.error('bad job')
-        console.log('TEST', { response })
     }
     return (
         <Card className="w-[600px]">

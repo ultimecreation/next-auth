@@ -32,6 +32,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
     if (existingUser.isTwoFactorEnabled && existingUser.email) {
         if (code) {
+
             const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email)
             if (!twoFactorToken) return { error: "Invalid code" }
             if (twoFactorToken.token !== code) return { error: "Invalid code" }
@@ -55,6 +56,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         }
 
     }
+
     try {
         await signIn("credentials", {
             email, password, redirectTo: DEFAULT_LOGIN_REDIRECT
